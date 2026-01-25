@@ -8,10 +8,10 @@ Reaalajas eestikeelse kõne tekstiks muutmise rakendus. Rakendus tuvastab kõne 
 
 | Platvorm | Allalaadimine |
 |----------|---------------|
-| Windows | [Jutukuva.Setup.0.8.0.exe](https://github.com/taltechnlp/jutukuva/releases/download/v0.8.0/Jutukuva.Setup.0.8.0.exe) |
-| macOS (Intel) | [Jutukuva-0.8.0.dmg](https://github.com/taltechnlp/jutukuva/releases/download/v0.8.0/Jutukuva-0.8.0.dmg) |
-| macOS (Apple Silicon) | [Jutukuva-0.8.0-arm64.dmg](https://github.com/taltechnlp/jutukuva/releases/download/v0.8.0/Jutukuva-0.8.0-arm64.dmg) |
-| Linux | [Jutukuva-0.8.0.AppImage](https://github.com/taltechnlp/jutukuva/releases/download/v0.8.0/Jutukuva-0.8.0.AppImage) |
+| Windows | [Jutukuva.Setup.0.8.1.exe](https://github.com/taltechnlp/jutukuva/releases/download/v0.8.1/Jutukuva.Setup.0.8.1.exe) |
+| macOS (Intel) | [Jutukuva-0.8.1.dmg](https://github.com/taltechnlp/jutukuva/releases/download/v0.8.1/Jutukuva-0.8.1.dmg) |
+| macOS (Apple Silicon) | [Jutukuva-0.8.1-arm64.dmg](https://github.com/taltechnlp/jutukuva/releases/download/v0.8.1/Jutukuva-0.8.1-arm64.dmg) |
+| Linux | [Jutukuva-0.8.1.AppImage](https://github.com/taltechnlp/jutukuva/releases/download/v0.8.1/Jutukuva-0.8.1.AppImage) |
 
 ### Jutukuva Subtiitrid (ülekatte rakendus)
 
@@ -19,10 +19,10 @@ Kuvab subtiitreid mis tahes rakenduse kohal - ideaalne videokõnede, esitluste j
 
 | Platvorm | Allalaadimine |
 |----------|---------------|
-| Windows | [Jutukuva.Subtiitrid_0.8.0_x64-setup.exe](https://github.com/taltechnlp/jutukuva/releases/download/v0.8.0/Jutukuva.Subtiitrid_0.8.0_x64-setup.exe) |
-| macOS | [Jutukuva.Subtiitrid_0.8.0_aarch64.dmg](https://github.com/taltechnlp/jutukuva/releases/download/v0.8.0/Jutukuva.Subtiitrid_0.8.0_aarch64.dmg) |
-| Linux (AppImage) | [Jutukuva.Subtiitrid_0.8.0_amd64.AppImage](https://github.com/taltechnlp/jutukuva/releases/download/v0.8.0/Jutukuva.Subtiitrid_0.8.0_amd64.AppImage) |
-| Linux (Debian) | [Jutukuva.Subtiitrid_0.8.0_amd64.deb](https://github.com/taltechnlp/jutukuva/releases/download/v0.8.0/Jutukuva.Subtiitrid_0.8.0_amd64.deb) |
+| Windows | [Jutukuva.Subtiitrid_0.8.1_x64-setup.exe](https://github.com/taltechnlp/jutukuva/releases/download/v0.8.1/Jutukuva.Subtiitrid_0.8.1_x64-setup.exe) |
+| macOS | [Jutukuva.Subtiitrid_0.8.1_aarch64.dmg](https://github.com/taltechnlp/jutukuva/releases/download/v0.8.1/Jutukuva.Subtiitrid_0.8.1_aarch64.dmg) |
+| Linux (AppImage) | [Jutukuva.Subtiitrid_0.8.1_amd64.AppImage](https://github.com/taltechnlp/jutukuva/releases/download/v0.8.1/Jutukuva.Subtiitrid_0.8.1_amd64.AppImage) |
+| Linux (Debian) | [Jutukuva.Subtiitrid_0.8.1_amd64.deb](https://github.com/taltechnlp/jutukuva/releases/download/v0.8.1/Jutukuva.Subtiitrid_0.8.1_amd64.deb) |
 
 ---
 
@@ -172,10 +172,10 @@ A real-time Estonian speech-to-text application. The app automatically detects s
 
 | Platform | Download |
 |----------|----------|
-| Windows | [Jutukuva.Setup.0.8.0.exe](https://github.com/taltechnlp/jutukuva/releases/download/v0.8.0/Jutukuva.Setup.0.8.0.exe) |
-| macOS (Intel) | [Jutukuva-0.8.0.dmg](https://github.com/taltechnlp/jutukuva/releases/download/v0.8.0/Jutukuva-0.8.0.dmg) |
-| macOS (Apple Silicon) | [Jutukuva-0.8.0-arm64.dmg](https://github.com/taltechnlp/jutukuva/releases/download/v0.8.0/Jutukuva-0.8.0-arm64.dmg) |
-| Linux | [Jutukuva-0.8.0.AppImage](https://github.com/taltechnlp/jutukuva/releases/download/v0.8.0/Jutukuva-0.8.0.AppImage) |
+| Windows | [Jutukuva.Setup.0.8.1.exe](https://github.com/taltechnlp/jutukuva/releases/download/v0.8.1/Jutukuva.Setup.0.8.1.exe) |
+| macOS (Intel) | [Jutukuva-0.8.1.dmg](https://github.com/taltechnlp/jutukuva/releases/download/v0.8.1/Jutukuva-0.8.1.dmg) |
+| macOS (Apple Silicon) | [Jutukuva-0.8.1-arm64.dmg](https://github.com/taltechnlp/jutukuva/releases/download/v0.8.1/Jutukuva-0.8.1-arm64.dmg) |
+| Linux | [Jutukuva-0.8.1.AppImage](https://github.com/taltechnlp/jutukuva/releases/download/v0.8.1/Jutukuva-0.8.1.AppImage) |
 
 ### Jutukuva Subtitles (overlay application)
 
@@ -183,10 +183,10 @@ Displays subtitles on top of any application - ideal for video calls, presentati
 
 | Platform | Download |
 |----------|----------|
-| Windows | [Jutukuva.Subtiitrid_0.8.0_x64-setup.exe](https://github.com/taltechnlp/jutukuva/releases/download/v0.8.0/Jutukuva.Subtiitrid_0.8.0_x64-setup.exe) |
-| macOS | [Jutukuva.Subtiitrid_0.8.0_aarch64.dmg](https://github.com/taltechnlp/jutukuva/releases/download/v0.8.0/Jutukuva.Subtiitrid_0.8.0_aarch64.dmg) |
-| Linux (AppImage) | [Jutukuva.Subtiitrid_0.8.0_amd64.AppImage](https://github.com/taltechnlp/jutukuva/releases/download/v0.8.0/Jutukuva.Subtiitrid_0.8.0_amd64.AppImage) |
-| Linux (Debian) | [Jutukuva.Subtiitrid_0.8.0_amd64.deb](https://github.com/taltechnlp/jutukuva/releases/download/v0.8.0/Jutukuva.Subtiitrid_0.8.0_amd64.deb) |
+| Windows | [Jutukuva.Subtiitrid_0.8.1_x64-setup.exe](https://github.com/taltechnlp/jutukuva/releases/download/v0.8.1/Jutukuva.Subtiitrid_0.8.1_x64-setup.exe) |
+| macOS | [Jutukuva.Subtiitrid_0.8.1_aarch64.dmg](https://github.com/taltechnlp/jutukuva/releases/download/v0.8.1/Jutukuva.Subtiitrid_0.8.1_aarch64.dmg) |
+| Linux (AppImage) | [Jutukuva.Subtiitrid_0.8.1_amd64.AppImage](https://github.com/taltechnlp/jutukuva/releases/download/v0.8.1/Jutukuva.Subtiitrid_0.8.1_amd64.AppImage) |
+| Linux (Debian) | [Jutukuva.Subtiitrid_0.8.1_amd64.deb](https://github.com/taltechnlp/jutukuva/releases/download/v0.8.1/Jutukuva.Subtiitrid_0.8.1_amd64.deb) |
 
 ---
 

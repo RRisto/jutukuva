@@ -28,11 +28,19 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Get version from tag
+        id: version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
+
+      - name: Set package.json version from tag
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: npm version ${{ steps.version.outputs.VERSION }} --no-git-tag-version --allow-same-version
 
       - name: Install npm dependencies
         run: npm ci --omit=optional
@@ -130,6 +138,32 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: Get version from tag
+        id: version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+        shell: bash
+
+      - name: Set Tauri version from tag (Unix)
+        if: startsWith(github.ref, 'refs/tags/v') && matrix.platform != 'win'
+        working-directory: packages/overlay-captions
+        run: |
+          if [[ "$OSTYPE" == "darwin"* ]]; then
+            sed -i '' 's/"version": "[^"]*"/"version": "${{ steps.version.outputs.VERSION }}"/' src-tauri/tauri.conf.json
+            sed -i '' 's/^version = "[^"]*"/version = "${{ steps.version.outputs.VERSION }}"/' src-tauri/Cargo.toml
+          else
+            sed -i 's/"version": "[^"]*"/"version": "${{ steps.version.outputs.VERSION }}"/' src-tauri/tauri.conf.json
+            sed -i 's/^version = "[^"]*"/version = "${{ steps.version.outputs.VERSION }}"/' src-tauri/Cargo.toml
+          fi
+
+      - name: Set Tauri version from tag (Windows)
+        if: startsWith(github.ref, 'refs/tags/v') && matrix.platform == 'win'
+        working-directory: packages/overlay-captions
+        shell: pwsh
+        run: |
+          $version = "${{ steps.version.outputs.VERSION }}"
+          (Get-Content src-tauri/tauri.conf.json) -replace '"version": "[^"]*"', "`"version`": `"$version`"" | Set-Content src-tauri/tauri.conf.json
+          (Get-Content src-tauri/Cargo.toml) -replace '^version = "[^"]*"', "version = `"$version`"" | Set-Content src-tauri/Cargo.toml
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
