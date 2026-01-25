@@ -111,7 +111,6 @@
       "category": "public.app-category.productivity",
       "entitlements": "assets/entitlements.mac.plist",
       "entitlementsInherit": "assets/entitlements.mac.plist",
-      "hardenedRuntime": true,
       "extendInfo": {
         "NSScreenCaptureUsageDescription": "This app needs to access screen recording to capture system audio from specific windows and screens.",
         "NSMicrophoneUsageDescription": "This app needs microphone access for speech recognition."
