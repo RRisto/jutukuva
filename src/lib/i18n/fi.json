@@ -674,6 +674,8 @@
     }
   },
   "settings": {
+    "theme": "Teema",
+    "language": "Kieli",
     "dictionaries": {
       "title": "Tekstipätkien sanakirjat",
       "description": "Hallitse tekstipätkien sanakirjojasi. Luo mukautettuja pikavalintoja, jotka laajenevat automaattisesti kirjoittaessasi.",

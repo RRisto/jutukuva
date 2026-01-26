@@ -772,6 +772,8 @@
     }
   },
   "settings": {
+    "theme": "Teema",
+    "language": "Keel",
     "dictionaries": {
       "title": "Asenduste sõnastikud",
       "description": "Halda oma asenduste sõnastikke. Loo kohandatud otseteid, mis laienevad automaatselt kirjutamise ajal.",

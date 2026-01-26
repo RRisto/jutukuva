@@ -779,6 +779,8 @@
     }
   },
   "settings": {
+    "theme": "Theme",
+    "language": "Language",
     "dictionaries": {
       "title": "Substitution Dictionaries",
       "description": "Manage your substitution dictionaries. Create custom shortcuts that automatically expand as you type.",
