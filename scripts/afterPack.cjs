@@ -51,46 +51,19 @@ exports.default = async function(context) {
         fs.mkdirSync(frameworksDir, { recursive: true });
     }
 
-    // List of dylibs to copy/symlink
-    const dylibs = [
-        'libonnxruntime.1.17.1.dylib',
-        'libonnxruntime.dylib',
-        'libsherpa-onnx-c-api.dylib',
-        'libsherpa-onnx-cxx-api.dylib'
-    ];
+    // Discover dylibs dynamically instead of hardcoding names
+    const dylibs = fs.readdirSync(sherpaLibsDir).filter(f => f.endsWith('.dylib'));
 
     for (const dylib of dylibs) {
         const srcPath = path.join(sherpaLibsDir, dylib);
         const dstPath = path.join(frameworksDir, dylib);
 
-        if (fs.existsSync(srcPath)) {
-            // Check if source is a symlink
-            const srcStats = fs.lstatSync(srcPath);
+        if (fs.existsSync(dstPath)) continue; // skip if already exists
 
-            if (srcStats.isSymbolicLink()) {
-                // If source is a symlink, read its target and create a similar symlink
-                const linkTarget = fs.readlinkSync(srcPath);
-                console.log('[afterPack] Creating symlink:', dylib, '->', linkTarget);
-
-                // If the symlink points to a file in the same directory, adjust the path
-                if (!path.isAbsolute(linkTarget)) {
-                    // Relative symlink - create relative symlink pointing to sherpa-libs
-                    const relativePath = path.join('..', 'Resources', 'sherpa-libs', linkTarget);
-                    fs.symlinkSync(relativePath, dstPath);
-                } else {
-                    // Absolute symlink - copy the actual file instead
-                    const realPath = fs.realpathSync(srcPath);
-                    fs.copyFileSync(realPath, dstPath);
-                }
-            } else {
-                // Regular file - create symlink pointing to the file in sherpa-libs
-                const relativePath = path.join('..', 'Resources', 'sherpa-libs', dylib);
-                console.log('[afterPack] Creating symlink:', dylib, '->', relativePath);
-                fs.symlinkSync(relativePath, dstPath);
-            }
-        } else {
-            console.log('[afterPack] Warning: dylib not found:', srcPath);
-        }
+        const srcStats = fs.lstatSync(srcPath);
+        const realSrcPath = srcStats.isSymbolicLink() ? fs.realpathSync(srcPath) : srcPath;
+        console.log('[afterPack] Copying:', dylib);
+        fs.copyFileSync(realSrcPath, dstPath);
     }
 
     console.log('[afterPack] macOS dylib setup complete');

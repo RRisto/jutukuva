@@ -92,6 +92,7 @@
       "output": "dist"
     },
     "mac": {
+      "hardenedRuntime": true,
       "target": [
         {
           "target": "dmg",

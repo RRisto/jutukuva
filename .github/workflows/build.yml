@@ -19,6 +19,10 @@ jobs:
             platform: linux
           - os: macos-latest
             platform: mac
+            mac_arch: arm64
+          - os: macos-13
+            platform: mac
+            mac_arch: x64
           - os: windows-latest
             platform: win
 
@@ -43,7 +47,7 @@ jobs:
         run: npm version ${{ steps.version.outputs.VERSION }} --no-git-tag-version --allow-same-version
 
       - name: Install npm dependencies
-        run: npm ci --omit=optional
+        run: npm ci
 
       - name: Install platform-specific sherpa-onnx (Linux)
         if: matrix.platform == 'linux'
@@ -51,7 +55,7 @@ jobs:
 
       - name: Install platform-specific sherpa-onnx (macOS)
         if: matrix.platform == 'mac'
-        run: npm install sherpa-onnx-darwin-x64@^1.12.18 sherpa-onnx-darwin-arm64@^1.12.18
+        run: npm install sherpa-onnx-darwin-${{ matrix.mac_arch }}@^1.12.18
 
       - name: Install platform-specific sherpa-onnx (Windows)
         if: matrix.platform == 'win'
@@ -71,7 +75,7 @@ jobs:
 
       - name: Build Electron app (macOS)
         if: matrix.platform == 'mac'
-        run: npx electron-builder --mac --publish never
+        run: npx electron-builder --mac --${{ matrix.mac_arch }} --publish never
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
