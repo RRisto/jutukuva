@@ -10,8 +10,11 @@ Reaalajas eestikeelse kõne tekstiks muutmise rakendus. Rakendus tuvastab kõne 
 |----------|---------------|
 | Windows | [Jutukuva.Setup.1.0.0.exe](https://github.com/taltechnlp/jutukuva/releases/download/v1.0.0/Jutukuva.Setup.1.0.0.exe) |
 | macOS (Intel) | [Jutukuva-1.0.0.dmg](https://github.com/taltechnlp/jutukuva/releases/download/v1.0.0/Jutukuva-1.0.0.dmg) |
+| macOS (Intel, zip) | [Jutukuva-1.0.0-mac.zip](https://github.com/taltechnlp/jutukuva/releases/download/v1.0.0/Jutukuva-1.0.0-mac.zip) |
 | macOS (Apple Silicon) | [Jutukuva-1.0.0-arm64.dmg](https://github.com/taltechnlp/jutukuva/releases/download/v1.0.0/Jutukuva-1.0.0-arm64.dmg) |
-| Linux | [Jutukuva-1.0.0.AppImage](https://github.com/taltechnlp/jutukuva/releases/download/v1.0.0/Jutukuva-1.0.0.AppImage) |
+| macOS (Apple Silicon, zip) | [Jutukuva-1.0.0-arm64-mac.zip](https://github.com/taltechnlp/jutukuva/releases/download/v1.0.0/Jutukuva-1.0.0-arm64-mac.zip) |
+| Linux (AppImage) | [Jutukuva-1.0.0.AppImage](https://github.com/taltechnlp/jutukuva/releases/download/v1.0.0/Jutukuva-1.0.0.AppImage) |
+| Linux (Debian) | [jutukuva_1.0.0_amd64.deb](https://github.com/taltechnlp/jutukuva/releases/download/v1.0.0/jutukuva_1.0.0_amd64.deb) |
 
 ### Jutukuva Subtiitrid (ülekatte rakendus)
 
@@ -174,8 +177,11 @@ A real-time Estonian speech-to-text application. The app automatically detects s
 |----------|----------|
 | Windows | [Jutukuva.Setup.1.0.0.exe](https://github.com/taltechnlp/jutukuva/releases/download/v1.0.0/Jutukuva.Setup.1.0.0.exe) |
 | macOS (Intel) | [Jutukuva-1.0.0.dmg](https://github.com/taltechnlp/jutukuva/releases/download/v1.0.0/Jutukuva-1.0.0.dmg) |
+| macOS (Intel, zip) | [Jutukuva-1.0.0-mac.zip](https://github.com/taltechnlp/jutukuva/releases/download/v1.0.0/Jutukuva-1.0.0-mac.zip) |
 | macOS (Apple Silicon) | [Jutukuva-1.0.0-arm64.dmg](https://github.com/taltechnlp/jutukuva/releases/download/v1.0.0/Jutukuva-1.0.0-arm64.dmg) |
-| Linux | [Jutukuva-1.0.0.AppImage](https://github.com/taltechnlp/jutukuva/releases/download/v1.0.0/Jutukuva-1.0.0.AppImage) |
+| macOS (Apple Silicon, zip) | [Jutukuva-1.0.0-arm64-mac.zip](https://github.com/taltechnlp/jutukuva/releases/download/v1.0.0/Jutukuva-1.0.0-arm64-mac.zip) |
+| Linux (AppImage) | [Jutukuva-1.0.0.AppImage](https://github.com/taltechnlp/jutukuva/releases/download/v1.0.0/Jutukuva-1.0.0.AppImage) |
+| Linux (Debian) | [jutukuva_1.0.0_amd64.deb](https://github.com/taltechnlp/jutukuva/releases/download/v1.0.0/jutukuva_1.0.0_amd64.deb) |
 
 ### Jutukuva Subtitles (overlay application)
 
