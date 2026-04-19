@@ -105,19 +105,17 @@ jobs:
         with:
           name: jutukuva-${{ matrix.platform }}${{ matrix.mac_arch && format('-{0}', matrix.mac_arch) || '' }}
           path: |
-            dist/*.AppImage
             dist/*.deb
             dist/*.dmg
-            dist/*.zip
             dist/*.exe
           if-no-files-found: ignore
+          retention-days: 7
 
       - name: Upload to Release (Linux)
         if: startsWith(github.ref, 'refs/tags/v') && matrix.platform == 'linux'
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            dist/*.AppImage
             dist/*.deb
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -128,7 +126,6 @@ jobs:
         with:
           files: |
             dist/*.dmg
-            dist/*.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -228,6 +225,7 @@ jobs:
             packages/overlay-captions/src-tauri/target/release/bundle/dmg/*.dmg
             packages/overlay-captions/src-tauri/target/release/bundle/nsis/*.exe
           if-no-files-found: ignore
+          retention-days: 7
 
       - name: Upload to Release (Linux - overlay-captions)
         if: startsWith(github.ref, 'refs/tags/v') && matrix.platform == 'linux'
