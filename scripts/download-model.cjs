@@ -26,7 +26,9 @@ function download(url, dest) {
               return;
             }
             res.resume();
-            fetchUrl(res.headers.location, redirects + 1);
+            // Resolve relative redirects against the current URL
+            const nextUrl = new URL(res.headers.location, u).toString();
+            fetchUrl(nextUrl, redirects + 1);
             return;
           }
           if (res.statusCode !== 200) {
