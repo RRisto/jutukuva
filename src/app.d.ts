@@ -146,6 +146,71 @@ declare global {
 			onDownloadProgress: (callback: (progress: ASRDownloadProgress) => void) => void;
 			removeDownloadProgressListener: () => void;
 		};
+		fileTranscribe: {
+			pickAudio: () => Promise<string | null>;
+			probe: (filePath: string) => Promise<FileProbeResult>;
+			start: (args: {
+				filePath: string;
+				channelsToProcess: number[];
+				totalChannels: number;
+				durationSec: number;
+			}) => Promise<{ success: boolean; jobId?: string; error?: string }>;
+			cancel: (jobId: string) => Promise<{ success: boolean }>;
+			exportTranscript: (args: {
+				defaultName: string;
+				content: string;
+			}) => Promise<{ success: boolean; path?: string; error?: string; cancelled?: boolean }>;
+			onSegment: (cb: (msg: FileTranscribeSegmentMsg) => void) => void;
+			onProgress: (cb: (msg: FileTranscribeProgressMsg) => void) => void;
+			onChannelStart: (cb: (msg: FileTranscribeChannelMsg) => void) => void;
+			onChannelDone: (cb: (msg: FileTranscribeChannelMsg) => void) => void;
+			onDone: (cb: (msg: FileTranscribeDoneMsg) => void) => void;
+			onError: (cb: (msg: FileTranscribeErrorMsg) => void) => void;
+			removeAllListeners: () => void;
+		};
+	}
+
+	interface FileProbeResult {
+		success: boolean;
+		durationSec?: number;
+		channels?: number;
+		sampleRate?: number;
+		codec?: string;
+		sizeBytes?: number;
+		error?: string;
+	}
+
+	interface FileTranscribeSegmentMsg {
+		type: 'segment';
+		channel: number;
+		text: string;
+		start: number;
+		end: number;
+	}
+
+	interface FileTranscribeProgressMsg {
+		type: 'progress';
+		channel: number;
+		totalChannels: number;
+		processedSec: number;
+		totalSec: number;
+	}
+
+	interface FileTranscribeChannelMsg {
+		type: 'channelStart' | 'channelDone';
+		channel: number;
+		totalChannels: number;
+	}
+
+	interface FileTranscribeDoneMsg {
+		jobId: string;
+		segments: Array<{ text: string; start: number; end: number; channel: number }>;
+		cancelled: boolean;
+	}
+
+	interface FileTranscribeErrorMsg {
+		jobId: string;
+		message: string;
 	}
 
 	interface ASRInitResult {

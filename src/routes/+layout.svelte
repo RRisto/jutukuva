@@ -52,6 +52,12 @@
 			action: () => modalStore.openSessions()
 		},
 		{
+			id: 'fileTranscribe',
+			labelKey: 'nav.fileTranscribe',
+			labelDefault: 'Transcribe file',
+			action: () => modalStore.openFileTranscribe()
+		},
+		{
 			id: 'dictionaries',
 			labelKey: 'nav.textSnippets',
 			labelDefault: 'Substitutions',
@@ -70,8 +76,13 @@
 		if (id === 'sessions') return modalStore.showSessionsModal;
 		if (id === 'dictionaries') return modalStore.showDictionariesModal;
 		if (id === 'help') return modalStore.showHelpModal;
+		if (id === 'fileTranscribe') return modalStore.showFileTranscribeModal;
 		// Editor is active when no modal is open
-		return id === 'editor' && !modalStore.showSessionsModal && !modalStore.showDictionariesModal && !modalStore.showHelpModal;
+		return id === 'editor'
+			&& !modalStore.showSessionsModal
+			&& !modalStore.showDictionariesModal
+			&& !modalStore.showHelpModal
+			&& !modalStore.showFileTranscribeModal;
 	}
 
 	function handleNavClick(item: NavItem) {
@@ -80,17 +91,25 @@
 			modalStore.closeSessions();
 			modalStore.closeDictionaries();
 			modalStore.closeHelp();
+			modalStore.closeFileTranscribe();
 		} else if (item.action) {
 			// Close other modals before opening this one
 			if (item.id === 'sessions') {
 				modalStore.closeDictionaries();
 				modalStore.closeHelp();
+				modalStore.closeFileTranscribe();
 			} else if (item.id === 'dictionaries') {
 				modalStore.closeSessions();
 				modalStore.closeHelp();
+				modalStore.closeFileTranscribe();
 			} else if (item.id === 'help') {
 				modalStore.closeSessions();
 				modalStore.closeDictionaries();
+				modalStore.closeFileTranscribe();
+			} else if (item.id === 'fileTranscribe') {
+				modalStore.closeSessions();
+				modalStore.closeDictionaries();
+				modalStore.closeHelp();
 			}
 			item.action();
 		}

@@ -1,4 +1,4 @@
-import { setupLibraryPath, getRecognizerConfig, getModelPath, MODEL_INFO, getLibraryPath } from './sherpa-config.js';
+import { setupLibraryPath, getRecognizerConfig, resolveModelPath, MODEL_INFO, getLibraryPath } from './sherpa-config.js';
 import { downloadModel, isModelDownloaded } from './model-downloader.js';
 import { createRequire } from 'module';
 import path from 'path';
@@ -61,7 +61,7 @@ export async function initializeASR(onProgress) {
       console.log('[ASR] Model not found, downloading...');
       modelDir = await downloadModel(onProgress);
     } else {
-      modelDir = getModelPath(MODEL_INFO.name);
+      modelDir = resolveModelPath(MODEL_INFO.name, MODEL_INFO.files);
       console.log('[ASR] Using existing model at:', modelDir);
     }
 

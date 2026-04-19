@@ -47,3 +47,5 @@ Thumbs.db
 # yarn.lock
 # pnpm-lock.yaml
 .tools/
+models/
+.claude/

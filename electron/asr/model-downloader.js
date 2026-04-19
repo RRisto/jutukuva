@@ -1,15 +1,22 @@
 import fs from 'fs';
 import path from 'path';
 import { pipeline } from 'stream/promises';
-import { getModelsDirectory, getModelPath, MODEL_INFO } from './sherpa-config.js';
+import { getModelsDirectory, getModelPath, isBundledModelAvailable, MODEL_INFO } from './sherpa-config.js';
 
 const MAX_RETRIES = 3;
 const RETRY_DELAY_MS = 1000;
 
 /**
- * Check if the model is already downloaded and valid
+ * Check if a usable model is available — either bundled with the app
+ * (resourcesPath/bundled-models/... or repo-root/models/... in dev) or
+ * already downloaded to userData.
  */
 export async function isModelDownloaded() {
+  if (isBundledModelAvailable(MODEL_INFO.name, MODEL_INFO.files)) {
+    console.log('[ASR] Using bundled model (no download needed)');
+    return true;
+  }
+
   const modelDir = getModelPath(MODEL_INFO.name);
 
   if (!fs.existsSync(modelDir)) {

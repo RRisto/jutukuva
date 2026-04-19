@@ -8,6 +8,7 @@
 let _showSessionsModal = $state(false);
 let _showDictionariesModal = $state(false);
 let _showHelpModal = $state(false);
+let _showFileTranscribeModal = $state(false);
 
 export const modalStore = {
 	get showSessionsModal() {
@@ -45,5 +46,17 @@ export const modalStore = {
 	},
 	closeHelp() {
 		_showHelpModal = false;
+	},
+	get showFileTranscribeModal() {
+		return _showFileTranscribeModal;
+	},
+	set showFileTranscribeModal(value: boolean) {
+		_showFileTranscribeModal = value;
+	},
+	openFileTranscribe() {
+		_showFileTranscribeModal = true;
+	},
+	closeFileTranscribe() {
+		_showFileTranscribeModal = false;
 	}
 };

@@ -105,17 +105,54 @@ export function setupLibraryPath() {
 }
 
 /**
- * Get the path to store downloaded models
+ * Get the path to store downloaded models (in userData)
  */
 export function getModelsDirectory() {
   return path.join(app.getPath('userData'), 'models');
 }
 
 /**
- * Get the path for a specific model
+ * Get the path for a specific model in userData (download destination)
  */
 export function getModelPath(modelName) {
   return path.join(getModelsDirectory(), modelName);
+}
+
+/**
+ * Get the root directory where bundled models live.
+ * - Packaged: resourcesPath/bundled-models (set up by electron-builder extraResources)
+ * - Dev: repo-root/models (populated by scripts/download-model.cjs)
+ */
+export function getBundledModelsDirectory() {
+  if (app.isPackaged) {
+    return path.join(process.resourcesPath, 'bundled-models');
+  }
+  return path.join(app.getAppPath(), 'models');
+}
+
+export function getBundledModelPath(modelName) {
+  return path.join(getBundledModelsDirectory(), modelName);
+}
+
+export function isBundledModelAvailable(modelName, requiredFiles) {
+  const dir = getBundledModelPath(modelName);
+  if (!fs.existsSync(dir)) return false;
+  for (const file of requiredFiles) {
+    const filePath = path.join(dir, file);
+    if (!fs.existsSync(filePath)) return false;
+    if (fs.statSync(filePath).size === 0) return false;
+  }
+  return true;
+}
+
+/**
+ * Resolve a model directory: prefer bundled copy, fall back to userData download location.
+ */
+export function resolveModelPath(modelName, requiredFiles) {
+  if (isBundledModelAvailable(modelName, requiredFiles)) {
+    return getBundledModelPath(modelName);
+  }
+  return getModelPath(modelName);
 }
 
 /**

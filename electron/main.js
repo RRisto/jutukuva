@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain, desktopCapturer, protocol, net, systemPreferences, nativeTheme } from 'electron';
+import { app, BrowserWindow, ipcMain, desktopCapturer, protocol, net, systemPreferences, nativeTheme, dialog } from 'electron';
 import { fileURLToPath } from 'url';
 import path from 'path';
 import fs from 'fs';
@@ -60,6 +60,13 @@ import {
 	getStatus as getASRStatus,
 	cleanup as cleanupASR
 } from './asr/asr-manager.js';
+import {
+	probeFile,
+	startFileTranscription,
+	cancelFileTranscription,
+	cancelAllJobs as cancelAllFileJobs
+} from './asr/file-transcriber.js';
+import { writeFile } from 'fs/promises';
 
 let mainWindow;
 let pendingDeepLinkUrl = null;
@@ -682,6 +689,77 @@ app.whenReady().then(() => {
 		}
 	});
 
+	// ═══════════════════════════════════════════════════════════════
+	// FILE TRANSCRIPTION IPC HANDLERS
+	// ═══════════════════════════════════════════════════════════════
+
+	ipcMain.handle('file:pickAudio', async () => {
+		const result = await dialog.showOpenDialog(mainWindow, {
+			title: 'Select audio file',
+			properties: ['openFile'],
+			filters: [
+				{ name: 'Audio', extensions: ['wav', 'mp3', 'm4a', 'flac', 'ogg', 'opus', 'aac', 'wma', 'mp4', 'mkv', 'mov', 'webm'] },
+				{ name: 'All files', extensions: ['*'] }
+			]
+		});
+		if (result.canceled || !result.filePaths?.length) return null;
+		return result.filePaths[0];
+	});
+
+	ipcMain.handle('file:probe', async (event, filePath) => {
+		try {
+			const info = await probeFile(filePath);
+			return { success: true, ...info };
+		} catch (error) {
+			console.error('[Main] file:probe error:', error);
+			return { success: false, error: error.message };
+		}
+	});
+
+	ipcMain.handle('file:transcribe', async (event, args) => {
+		try {
+			const { filePath, channelsToProcess, totalChannels, durationSec } = args;
+			const jobId = await startFileTranscription({
+				filePath,
+				channelsToProcess,
+				totalChannels,
+				durationSec,
+				onDownloadProgress: (p) => mainWindow?.webContents.send('asr:download-progress', p),
+				onSegment: (msg) => mainWindow?.webContents.send('file:segment', msg),
+				onProgress: (msg) => mainWindow?.webContents.send('file:progress', msg),
+				onChannelStart: (msg) => mainWindow?.webContents.send('file:channelStart', msg),
+				onChannelDone: (msg) => mainWindow?.webContents.send('file:channelDone', msg),
+				onDone: (msg) => mainWindow?.webContents.send('file:done', msg),
+				onError: (msg) => mainWindow?.webContents.send('file:error', msg)
+			});
+			return { success: true, jobId };
+		} catch (error) {
+			console.error('[Main] file:transcribe error:', error);
+			return { success: false, error: error.message };
+		}
+	});
+
+	ipcMain.handle('file:cancelTranscribe', async (event, jobId) => {
+		return { success: cancelFileTranscription(jobId) };
+	});
+
+	ipcMain.handle('file:exportTranscript', async (event, { defaultName, content }) => {
+		const result = await dialog.showSaveDialog(mainWindow, {
+			title: 'Save transcript',
+			defaultPath: defaultName,
+			filters: [
+				{ name: 'All files', extensions: ['*'] }
+			]
+		});
+		if (result.canceled || !result.filePath) return { success: false, cancelled: true };
+		try {
+			await writeFile(result.filePath, content, 'utf-8');
+			return { success: true, path: result.filePath };
+		} catch (error) {
+			return { success: false, error: error.message };
+		}
+	});
+
 	createWindow();
 
 	app.on('activate', () => {
@@ -701,6 +779,7 @@ app.on('window-all-closed', () => {
 
 app.on('before-quit', () => {
 	// stopBroadcastServer();
+	cancelAllFileJobs();
 	cleanupASR();
 	closeDatabase();
 });

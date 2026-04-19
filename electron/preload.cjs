@@ -102,6 +102,31 @@ contextBridge.exposeInMainWorld('electronAPI', {
 	onDeepLinkJoin: (callback) => ipcRenderer.on('deep-link-join', (event, data) => callback(data))
 });
 
+// Expose File Transcription API
+contextBridge.exposeInMainWorld('fileTranscribe', {
+	pickAudio: () => ipcRenderer.invoke('file:pickAudio'),
+	probe: (filePath) => ipcRenderer.invoke('file:probe', filePath),
+	start: (args) => ipcRenderer.invoke('file:transcribe', args),
+	cancel: (jobId) => ipcRenderer.invoke('file:cancelTranscribe', jobId),
+	exportTranscript: (args) => ipcRenderer.invoke('file:exportTranscript', args),
+
+	onSegment: (cb) => ipcRenderer.on('file:segment', (event, msg) => cb(msg)),
+	onProgress: (cb) => ipcRenderer.on('file:progress', (event, msg) => cb(msg)),
+	onChannelStart: (cb) => ipcRenderer.on('file:channelStart', (event, msg) => cb(msg)),
+	onChannelDone: (cb) => ipcRenderer.on('file:channelDone', (event, msg) => cb(msg)),
+	onDone: (cb) => ipcRenderer.on('file:done', (event, msg) => cb(msg)),
+	onError: (cb) => ipcRenderer.on('file:error', (event, msg) => cb(msg)),
+
+	removeAllListeners: () => {
+		ipcRenderer.removeAllListeners('file:segment');
+		ipcRenderer.removeAllListeners('file:progress');
+		ipcRenderer.removeAllListeners('file:channelStart');
+		ipcRenderer.removeAllListeners('file:channelDone');
+		ipcRenderer.removeAllListeners('file:done');
+		ipcRenderer.removeAllListeners('file:error');
+	}
+});
+
 // Expose Local ASR API (sherpa-onnx)
 contextBridge.exposeInMainWorld('asr', {
 	// Initialize ASR (downloads model if needed)

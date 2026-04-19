@@ -19,7 +19,8 @@
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
     "electron:dev": "concurrently \"npm run dev\" \"wait-on http://localhost:5173 && cross-env NODE_ENV=development LD_LIBRARY_PATH=./node_modules/sherpa-onnx-linux-x64:$LD_LIBRARY_PATH electron . --no-sandbox\"",
-    "electron:build": "npm run build && electron-builder",
+    "electron:build": "node scripts/download-model.cjs && npm run build && electron-builder",
+    "download-model": "node scripts/download-model.cjs",
     "rebuild": "npx @electron/rebuild --force --module-dir . --which-module better-sqlite3",
     "postinstall": "bash scripts/fix-sherpa-rpath.sh || true"
   },
@@ -44,9 +45,11 @@
     "wait-on": "^9.0.3"
   },
   "dependencies": {
+    "@ffprobe-installer/ffprobe": "^2.1.2",
     "@ricky0123/vad-web": "^0.0.29",
     "@sveltejs/adapter-node": "^5.4.0",
     "better-sqlite3": "^12.4.1",
+    "ffmpeg-static": "^5.3.0",
     "nanoid": "^5.1.6",
     "onnxruntime-web": "^1.23.2",
     "prosemirror-changeset": "^2.2.0",
@@ -68,10 +71,10 @@
     "yjs": "^13.6.27"
   },
   "optionalDependencies": {
-    "sherpa-onnx-linux-x64": "^1.12.18",
-    "sherpa-onnx-linux-arm64": "^1.12.18",
-    "sherpa-onnx-darwin-x64": "^1.12.18",
     "sherpa-onnx-darwin-arm64": "^1.12.18",
+    "sherpa-onnx-darwin-x64": "^1.12.18",
+    "sherpa-onnx-linux-arm64": "^1.12.18",
+    "sherpa-onnx-linux-x64": "^1.12.18",
     "sherpa-onnx-win-x64": "^1.12.18"
   },
   "build": {
@@ -85,7 +88,9 @@
     ],
     "asarUnpack": [
       "**/*.node",
-      "**/sherpa-onnx-node/**"
+      "**/sherpa-onnx-node/**",
+      "**/node_modules/ffmpeg-static/**",
+      "**/node_modules/@ffprobe-installer/**"
     ],
     "directories": {
       "buildResources": "assets",
@@ -120,7 +125,16 @@
         {
           "from": "node_modules/sherpa-onnx-darwin-${arch}",
           "to": "sherpa-libs",
-          "filter": ["**/*"]
+          "filter": [
+            "**/*"
+          ]
+        },
+        {
+          "from": "models/streaming-zipformer-large.et-en.w2n",
+          "to": "bundled-models/streaming-zipformer-large.et-en.w2n",
+          "filter": [
+            "**/*"
+          ]
         }
       ]
     },
@@ -139,7 +153,16 @@
         {
           "from": "node_modules/sherpa-onnx-win-x64",
           "to": "sherpa-libs",
-          "filter": ["**/*"]
+          "filter": [
+            "**/*"
+          ]
+        },
+        {
+          "from": "models/streaming-zipformer-large.et-en.w2n",
+          "to": "bundled-models/streaming-zipformer-large.et-en.w2n",
+          "filter": [
+            "**/*"
+          ]
         }
       ]
     },
@@ -164,7 +187,16 @@
         {
           "from": "node_modules/sherpa-onnx-linux-x64",
           "to": "sherpa-libs",
-          "filter": ["**/*"]
+          "filter": [
+            "**/*"
+          ]
+        },
+        {
+          "from": "models/streaming-zipformer-large.et-en.w2n",
+          "to": "bundled-models/streaming-zipformer-large.et-en.w2n",
+          "filter": [
+            "**/*"
+          ]
         }
       ]
     },

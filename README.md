@@ -63,6 +63,18 @@ Kuvab subtiitreid mis tahes rakenduse kohal - ideaalne videokõnede, esitluste j
 | **Tab** | Vali järgmine sõna |
 | **Shift+Tab** | Vali eelmine sõna |
 
+### Faili transkribeerimine
+
+Lisaks otseülekandele saab rakendus transkribeerida ka olemasolevaid helifaile - sh pikki salvestusi ja mitmekanalisi faile, kus iga kanal on eraldi kõneleja.
+
+1. Ava **Transkribeeri fail** menüüst
+2. Vali helifail (WAV, MP3, M4A, FLAC, OGG, MP4/MKV/MOV jm)
+3. Kui failis on mitu kanalit, vali kas transkribeerida kõik kanalid eraldi
+4. Vajuta **Alusta transkribeerimist** - tekst ilmub toimetajasse reaalajas
+5. Valmis transkriptsiooni saab salvestada **JSONina** või **tekstifailina** (aegmärkidega)
+
+Fail voogedastatakse mällu koormuseta - mitmetunnised salvestused toimivad ilma mäluprobleemita. Kui seanss on veel avamata, luuakse see automaatselt failinime järgi.
+
 ### Asendussõnastikud
 
 Asendussõnastikud võimaldavad lühendeid automaatselt pikemaks tekstiks muuta:
@@ -157,12 +169,22 @@ kirikaja/
 # Sõltuvuste paigaldamine
 npm install
 
-# Arendusrežiimis käivitamine
+# Arendusrežiimis käivitamine (kõnetuvastuse mudel laaditakse vajadusel esmakäivitusel)
 npm run electron:dev
 
-# Tootmisversiooni ehitamine
+# Kõnetuvastuse mudeli käsitsi allalaadimine (~300 MB, valikuline)
+npm run download-model
+
+# Tootmisversiooni ehitamine (mudel laaditakse automaatselt ja pannakse installerisse kaasa)
 npm run electron:build
 ```
+
+**Kõnetuvastuse mudel** on Eesti keele streaming-zipformer mudel (TalTechNLP/streaming-zipformer-large.et-en.w2n, ~300 MB). Ehitamise ajal laaditakse see automaatselt HuggingFace'ist ja pakitakse installerisse, nii et lõppkasutaja saab rakenduse kasutada kohe pärast installimist - ilma interneti- või esmakäivituse allalaadimiseta.
+
+**Platvormipõhine ehitamine:**
+- **Windows**: ehita Windowsi arvutis natiivselt (`npm run electron:build`)
+- **Linux**: ehita WSL2-s või Linuxi masinas
+- **macOS**: vajalik on macOS masin või GitHub Actions (`.github/workflows/build.yml` ehitab kõik kolm platvormi paralleelselt)
 
 ## Litsents
 
@@ -229,6 +251,18 @@ Displays subtitles on top of any application - ideal for video calls, presentati
 | **Ctrl+Shift+Z** | Redo |
 | **Tab** | Select next word |
 | **Shift+Tab** | Select previous word |
+
+### File Transcription
+
+In addition to live recording, the app can also transcribe existing audio files — including long recordings and multi-channel files where each channel is a separate speaker.
+
+1. Open **Transcribe file** from the menu
+2. Choose an audio file (WAV, MP3, M4A, FLAC, OGG, MP4/MKV/MOV, etc.)
+3. If the file has multiple channels, choose whether to transcribe each channel separately
+4. Click **Start transcription** — text streams into the editor in real time
+5. The finished transcript can be saved as **JSON** or **TXT** (with timestamps)
+
+Files are streamed through memory — multi-hour recordings work without memory issues. If no session is open, one is created automatically using the file name.
 
 ### Substitution Dictionaries
 
@@ -324,12 +358,22 @@ kirikaja/
 # Install dependencies
 npm install
 
-# Run in development mode
+# Run in development mode (ASR model downloads on first use if not bundled)
 npm run electron:dev
 
-# Build for production
+# Pre-download the ASR model (~300 MB, optional for dev)
+npm run download-model
+
+# Build for production (model is fetched automatically and bundled into the installer)
 npm run electron:build
 ```
+
+**The ASR model** is the Estonian streaming-zipformer (TalTechNLP/streaming-zipformer-large.et-en.w2n, ~300 MB). At build time it is fetched from HuggingFace and packed into the installer, so end users can use the app immediately after installation — no network access or first-run download required.
+
+**Platform-specific builds:**
+- **Windows**: build natively on a Windows machine (`npm run electron:build`)
+- **Linux**: build inside WSL2 or on a Linux machine
+- **macOS**: requires a macOS machine or GitHub Actions (`.github/workflows/build.yml` builds all three platforms in parallel)
 
 ## License
 

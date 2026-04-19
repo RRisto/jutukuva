@@ -14,6 +14,7 @@
 	import SessionsModal from '$lib/components/modals/SessionsModal.svelte';
 	import DictionariesModal from '$lib/components/modals/DictionariesModal.svelte';
 	import HelpModal from '$lib/components/modals/HelpModal.svelte';
+	import FileTranscribeModal from '$lib/components/modals/FileTranscribeModal.svelte';
 	import { modalStore } from '$lib/stores/modalStore.svelte';
 	import { clickOutside } from '$lib/components/prosemirror-speech/utils/clickOutside';
 
@@ -1892,4 +1893,25 @@
 <HelpModal
 	bind:open={modalStore.showHelpModal}
 	onClose={() => modalStore.closeHelp()}
+/>
+
+<!-- File Transcribe Modal (SPA overlay) -->
+<FileTranscribeModal
+	bind:open={modalStore.showFileTranscribeModal}
+	speechEditor={speechEditor}
+	ensureSession={async (suggestedName) => {
+		if (currentDbSession?.id) return currentDbSession.id;
+		try {
+			const newId = crypto.randomUUID();
+			const name = (suggestedName && suggestedName.trim()) || $_('fileTranscribe.title');
+			await window.db.createSession(newId, name, null, null);
+			await window.db.activateSession(newId);
+			currentDbSession = await window.db.getSession(newId);
+			return currentDbSession?.id ?? null;
+		} catch (err) {
+			console.error('[FileTranscribe] Failed to auto-create session:', err);
+			return null;
+		}
+	}}
+	onClose={() => modalStore.closeFileTranscribe()}
 />
