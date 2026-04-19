@@ -3,7 +3,7 @@
 Reaalajas eestikeelse kõne tekstiks muutmise rakendus. Rakendus tuvastab kõne automaatselt ja kuvab selle tekstina, mida saab koheselt redigeerida ja teistega jagada.
 
 See on minu fork sellest projektist: https://github.com/RRisto/jutukuva
-Lisasin failist transkribeerimise.
+Lisasin failist transkribeerimise ning mudel on kohe rakenduse sees, ei pea midagi alla laadima esimesel käivitamisel.
 
 <p align="center">
   <a href="https://youtube.com/watch?v=WjRNXt27Dbs">
