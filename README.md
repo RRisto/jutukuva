@@ -2,7 +2,7 @@
 
 Reaalajas eestikeelse kõne tekstiks muutmise rakendus. Rakendus tuvastab kõne automaatselt ja kuvab selle tekstina, mida saab koheselt redigeerida ja teistega jagada.
 
-See on minu fork sellest projektist: https://github.com/RRisto/jutukuva
+See on minu fork sellest projektist: https://github.com/taltechnlp/jutukuva
 Lisasin failist transkribeerimise ning mudel on kohe rakenduse sees, ei pea midagi alla laadima esimesel käivitamisel.
 
 <p align="center">
@@ -33,6 +33,29 @@ Kuvab subtiitreid mis tahes rakenduse kohal - ideaalne videokõnede, esitluste j
 | macOS (Apple Silicon) | [Jutukuva.Subtiitrid_1.0.2_aarch64.dmg](https://github.com/RRisto/jutukuva/releases/download/v1.0.2/Jutukuva.Subtiitrid_1.0.2_aarch64.dmg) |
 | Linux (AppImage) | [Jutukuva.Subtiitrid_1.0.2_amd64.AppImage](https://github.com/RRisto/jutukuva/releases/download/v1.0.2/Jutukuva.Subtiitrid_1.0.2_amd64.AppImage) |
 | Linux (Debian) | [Jutukuva.Subtiitrid_1.0.2_amd64.deb](https://github.com/RRisto/jutukuva/releases/download/v1.0.2/Jutukuva.Subtiitrid_1.0.2_amd64.deb) |
+
+---
+
+## Süsteeminõuded
+
+Kõnetuvastus toimub täielikult kohalikus arvutis (offline), nii et mudel tuleb mällu laadida. Hinnangulised ressursinõuded:
+
+**Mälu (RAM):**
+- Electroni raamistik + kasutajaliides: ~400–600 MB
+- Otsekõnetuvastus (sherpa-onnx laadib suure zipformer mudeli): ~600 MB – 1 GB
+- Faili transkribeerimine käivitab eraldi protsessi oma kõnetuvastuse mootoriga: **+600 MB – 1 GB** transkribeerimise ajal. Mitmekanalilisi faile töödeldakse kanalite kaupa järjestikku, seega mälukasutus ei korrutu kanalite arvuga.
+
+**Tüüpiline kasutus:**
+- Tavaline töö (otsekõnetuvastus): **~1–1,5 GB**
+- Faili transkribeerimine samaaegselt otsekõnetuvastusega: **~2–2,5 GB tipphetkel**
+
+**Soovituslik miinimum:**
+- **RAM**: 8 GB töötab; 16 GB on mugavam (kui kasutad samal ajal brauserit/muid rakendusi)
+- **Protsessor**: tavaline 64-bitine x64 protsessor (zipformer töötab protsessoril, GPU-d ei kasutata). Transkribeerimise ajal koormatakse 1–2 tuuma
+- **Ketas**: ~500 MB – 1 GB vaba ruumi (sisaldab kaasapakitud mudelit)
+- **Operatsioonisüsteem**: Windows, Linux või macOS
+
+Need on hinnangud — tegelik kasutus sõltub riistvarast ja samaaegselt jooksvatest protsessidest.
 
 ---
 
@@ -129,12 +152,6 @@ Rakenduse andmed salvestatakse:
 - **macOS:** `~/Library/Application Support/jutukuva/database.sqlite`
 - **Windows:** `%APPDATA%/jutukuva/database.sqlite`
 
----
-
-## Panustamine
-
-Vigade raporteerimiseks või ettepanekute tegemiseks:
-- Loo [GitHub issue](https://github.com/taltechnlp/jutukuva/issues)
 
 ---
 
@@ -219,6 +236,29 @@ Displays subtitles on top of any application - ideal for video calls, presentati
 | macOS (Apple Silicon) | [Jutukuva.Subtiitrid_1.0.2_aarch64.dmg](https://github.com/RRisto/jutukuva/releases/download/v1.0.2/Jutukuva.Subtiitrid_1.0.2_aarch64.dmg) |
 | Linux (AppImage) | [Jutukuva.Subtiitrid_1.0.2_amd64.AppImage](https://github.com/RRisto/jutukuva/releases/download/v1.0.2/Jutukuva.Subtiitrid_1.0.2_amd64.AppImage) |
 | Linux (Debian) | [Jutukuva.Subtiitrid_1.0.2_amd64.deb](https://github.com/RRisto/jutukuva/releases/download/v1.0.2/Jutukuva.Subtiitrid_1.0.2_amd64.deb) |
+
+---
+
+## System Requirements
+
+Speech recognition runs entirely on your local machine (offline), so the model has to be loaded into memory. Approximate resource needs:
+
+**Memory (RAM):**
+- Electron shell + UI baseline: ~400–600 MB
+- Live ASR (sherpa-onnx loads the large zipformer into memory): ~600 MB – 1 GB
+- File transcription spawns a separate process with its own recognizer: **+600 MB – 1 GB** while a file job is running. Multi-channel files process channels sequentially, so memory does not multiply per channel.
+
+**Typical usage:**
+- Normal use (live ASR): **~1–1.5 GB**
+- File transcription alongside live ASR: **~2–2.5 GB peak**
+
+**Recommended minimums:**
+- **RAM**: 8 GB works; 16 GB comfortable (especially if you run a browser / IDE / other apps alongside)
+- **CPU**: any modern 64-bit x64 CPU (zipformer inference is CPU-bound; no GPU is used). Expect 1–2 cores pinned during transcription
+- **Disk**: ~500 MB – 1 GB free for the installed app including the bundled model
+- **OS**: Windows, Linux, or macOS
+
+These are estimates — actual numbers depend on your hardware and what else is running.
 
 ---
 
@@ -315,12 +355,6 @@ Application data is stored at:
 - **macOS:** `~/Library/Application Support/jutukuva/database.sqlite`
 - **Windows:** `%APPDATA%/jutukuva/database.sqlite`
 
----
-
-## Contributing
-
-To report bugs or make suggestions:
-- Create a [GitHub issue](https://github.com/taltechnlp/jutukuva/issues)
 
 ---
 
